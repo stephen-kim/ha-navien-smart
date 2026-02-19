@@ -5,8 +5,8 @@
     "@stephen-kim"
   ],
   "config_flow": true,
-  "integration_type": "hub",
   "documentation": "https://github.com/stephen-kim/ha-navien-smart",
+  "integration_type": "hub",
   "iot_class": "cloud_push",
   "issue_tracker": "https://github.com/stephen-kim/ha-navien-smart/issues",
   "loggers": [

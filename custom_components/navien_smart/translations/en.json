@@ -1,0 +1,52 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Add Navien Smart",
+        "description": "Connect your Navien Smart account and discover heating mats.",
+        "data": {
+          "auth_mode": "Authentication mode",
+          "username": "Username (Navien ID)",
+          "password": "Password",
+          "refresh_token": "Refresh token",
+          "account_seq": "Account sequence",
+          "separate_control": "Separate control for dual-zone devices",
+          "sound_enabled": "Enable operation beep",
+          "scan_interval": "Update interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "cannot_connect": "Failed to connect to Navien API",
+      "invalid_auth": "Invalid credentials or token",
+      "invalid_account_seq": "Account sequence must be a number",
+      "missing_password": "Password is required in account mode",
+      "missing_refresh_token": "Refresh token is required in token mode",
+      "missing_account_seq": "Account sequence is required in token mode",
+      "unknown": "Unexpected error occurred"
+    },
+    "abort": {
+      "already_configured": "This account is already configured"
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Navien Smart options",
+        "data": {
+          "separate_control": "Separate control for dual-zone devices",
+          "sound_enabled": "Enable operation beep",
+          "scan_interval": "Update interval (seconds)"
+        }
+      }
+    }
+  },
+  "selector": {
+    "auth_mode": {
+      "options": {
+        "account": "Account (ID + password)",
+        "token": "Token (refresh token + account sequence)"
+      }
+    }
+  }
+}

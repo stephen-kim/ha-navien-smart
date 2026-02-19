@@ -1,0 +1,21 @@
+{
+  "domain": "navien_smart",
+  "name": "Navien Smart",
+  "codeowners": [
+    "@stephen-kim"
+  ],
+  "config_flow": true,
+  "integration_type": "hub",
+  "documentation": "https://github.com/stephen-kim/ha-navien-smart",
+  "iot_class": "cloud_push",
+  "issue_tracker": "https://github.com/stephen-kim/ha-navien-smart/issues",
+  "loggers": [
+    "custom_components.navien_smart",
+    "paho"
+  ],
+  "requirements": [
+    "botocore>=1.35.0",
+    "paho-mqtt>=1.6.1"
+  ],
+  "version": "0.1.1"
+}

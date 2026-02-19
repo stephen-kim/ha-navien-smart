@@ -49,7 +49,7 @@ wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/lates
 특정 버전 설치:
 
 ```shell
-wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/latest/install.sh | ARCHIVE_TAG=v0.1.2 bash -
+wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/latest/install.sh | ARCHIVE_TAG=v0.1.3 bash -
 ```
 
 설치 후 Home Assistant를 재시작하세요.
@@ -70,11 +70,28 @@ wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/lates
 
 ## 설정
 
-`설정` -> `기기 및 서비스` -> `통합 추가` -> `Navien Smart`
+`설정` -> `기기 및 서비스` -> `통합` -> `통합 추가` -> `Navien Smart` 검색
 
 또는:
 
 [![Add Integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=navien_smart)
+
+### 인증 모드
+
+- `account` (초기 설정 권장)
+  - 입력값: `username`, `password`
+- `token`
+  - 입력값: `username`, `refresh_token`, `account_seq`
+  - Home Assistant에 비밀번호를 저장하고 싶지 않을 때 사용
+
+### 권장 옵션
+
+- `separate_control`
+  - 2구 모델에서 좌/우 climate 엔티티를 분리 생성
+- `sound_enabled`
+  - 지원 기기에서 동작 알림음 사용
+- `scan_interval`
+  - 코디네이터 상태 갱신 주기(초, 기본값 `120`)
 
 ## 개발
 

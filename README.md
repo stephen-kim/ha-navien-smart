@@ -49,7 +49,7 @@ wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/lates
 Specific version:
 
 ```shell
-wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/latest/install.sh | ARCHIVE_TAG=v0.1.2 bash -
+wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/latest/install.sh | ARCHIVE_TAG=v0.1.3 bash -
 ```
 
 After installation, restart Home Assistant.
@@ -70,11 +70,28 @@ After installation, restart Home Assistant.
 
 ## Configure
 
-`Settings` -> `Devices & Services` -> `Add Integration` -> `Navien Smart`
+`Settings` -> `Devices & Services` -> `Integrations` -> `Add Integration` -> Search `Navien Smart`
 
 Or use:
 
 [![Add Integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=navien_smart)
+
+### Auth modes
+
+- `account` (recommended for first setup)
+  - Input: `username`, `password`
+- `token`
+  - Input: `username`, `refresh_token`, `account_seq`
+  - Use this when you do not want to keep a password in Home Assistant
+
+### Recommended options
+
+- `separate_control`
+  - Enable for dual-zone models to create left/right climate entities separately
+- `sound_enabled`
+  - Enable operation beep on supported devices
+- `scan_interval`
+  - Coordinator refresh interval in seconds (default: `120`)
 
 ## Development
 

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.2
+
+- Fixed HACS `hacs.json` schema (`domains` removed)
+- Adjusted HACS Validate workflow to ignore `brands` check until brand submission
+- Kept Hassfest requirements satisfied (`manifest` ordering and `CONFIG_SCHEMA`)
+
 ## 0.1.1
 
 - Switched repository focus to Home Assistant custom integration

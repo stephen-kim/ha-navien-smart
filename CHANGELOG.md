@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.3
+
+- Added `install.sh` for shell-based manual installation
+- Expanded README/README-ko with badges and installation methods (HACS/manual/shell)
+- Added Home Assistant shortcut badges for repository and config flow
+
 ## 0.1.2
 
 - Fixed HACS `hacs.json` schema (`domains` removed)

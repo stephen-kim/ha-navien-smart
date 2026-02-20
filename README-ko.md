@@ -1,5 +1,4 @@
 [![version](https://img.shields.io/github/manifest-json/v/stephen-kim/ha-navien-smart?filename=custom_components%2Fnavien_smart%2Fmanifest.json)](https://github.com/stephen-kim/ha-navien-smart/releases/latest)
-[![releases](https://img.shields.io/github/downloads/stephen-kim/ha-navien-smart/total)](https://github.com/stephen-kim/ha-navien-smart/releases)
 [![issues](https://img.shields.io/github/issues/stephen-kim/ha-navien-smart)](https://github.com/stephen-kim/ha-navien-smart/issues)
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz)
 
@@ -25,7 +24,7 @@
 
 1. 나비엔 앱이 스마트폰에 설치되어 있고 회원가입 후 한 번은 기기 연동을 완료해야 합니다.
 2. Home Assistant에 [HACS](https://www.hacs.xyz)를 설치합니다.
-3. HACS를 엽니다.
+3. Home Assistant에서 HACS를 엽니다.
 4. `통합` -> 우측 상단 메뉴 -> `커스텀 저장소`로 이동합니다.
 5. 이 저장소 URL을 추가하고 카테고리를 `Integration`으로 선택합니다.
 6. `Navien Smart`를 검색해 설치합니다.

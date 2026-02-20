@@ -2,6 +2,7 @@
 
 from __future__ import annotations
 
+import re
 from dataclasses import dataclass, replace
 from typing import Any, Literal
 
@@ -43,9 +44,12 @@ class NavienDevice:
         side = nickname.get("side") or {}
 
         heat_control = props["registry"]["attributes"]["functions"]["heatControl"]
-        step = float(heat_control["unit"])
-        minimum = float(heat_control["rangeMin"]) - step
-        maximum = float(heat_control["rangeMax"])
+        step = _to_float(heat_control.get("unit"))
+        minimum_raw = _to_float(heat_control.get("rangeMin"))
+        maximum = _to_float(heat_control.get("rangeMax"))
+        if step is None or minimum_raw is None or maximum is None:
+            raise ValueError(f"Invalid heatControl values: {heat_control!r}")
+        minimum = minimum_raw - step
 
         return cls(
             device_seq=int(raw["deviceSeq"]),
@@ -277,10 +281,23 @@ def merge_status(
 def _to_float(value: Any) -> float | None:
     if value is None:
         return None
-    try:
+
+    if isinstance(value, (int, float)):
         return float(value)
-    except (TypeError, ValueError):
-        return None
+
+    if isinstance(value, str):
+        try:
+            return float(value)
+        except ValueError:
+            match = re.search(r"[-+]?\d+(?:\.\d+)?", value.strip())
+            if not match:
+                return None
+            try:
+                return float(match.group(0))
+            except ValueError:
+                return None
+
+    return None
 
 
 def _to_bool(value: Any) -> bool | None:

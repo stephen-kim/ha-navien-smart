@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.5
+
+- Fixed device setup failure when heat-control values include unit suffixes like `0.5C`
+- Improved numeric parsing for reported temperature values with unit suffixes
+
 ## 0.1.4
 
 - Fixed setup failure when AWS IoT websocket handshake fails

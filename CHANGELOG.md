@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.7
+
+- Fixed potential setup failure when enabling separate left/right control on some models
+- Hardened nickname parsing for dual-zone metadata (supports alternate API shape and non-string values)
+
 ## 0.1.6
 
 - Added detailed setup descriptions for account/token fields in config flow

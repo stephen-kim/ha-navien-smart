@@ -40,8 +40,17 @@ class NavienDevice:
     @classmethod
     def from_api_data(cls, raw: dict[str, Any]) -> "NavienDevice":
         props = raw["Properties"]
-        nickname = props["nickName"]
-        side = nickname.get("side") or {}
+        nickname = props["nickName"] if isinstance(props.get("nickName"), dict) else {}
+        side = nickname.get("side")
+
+        if not isinstance(side, dict):
+            user_info = (
+                props.get("registry", {})
+                .get("attributes", {})
+                .get("userInfo", {})
+            )
+            user_nickname = user_info.get("nickName") if isinstance(user_info, dict) else None
+            side = user_nickname if isinstance(user_nickname, dict) else {}
 
         heat_control = props["registry"]["attributes"]["functions"]["heatControl"]
         step = _to_float(heat_control.get("unit"))
@@ -51,15 +60,19 @@ class NavienDevice:
             raise ValueError(f"Invalid heatControl values: {heat_control!r}")
         minimum = minimum_raw - step
 
+        name = _to_optional_str(nickname.get("mainItem")) or str(raw.get("modelName", "Navien"))
+        left_name = _to_optional_str(side.get("left")) if isinstance(side, dict) else None
+        right_name = _to_optional_str(side.get("right")) if isinstance(side, dict) else None
+
         return cls(
             device_seq=int(raw["deviceSeq"]),
             service_code=int(raw["serviceCode"]),
             device_id=str(raw["deviceId"]),
             model_code=str(raw["modelCode"]),
             model_name=str(raw.get("modelName", "Navien")),
-            name=str(nickname["mainItem"]),
-            left_name=side.get("left"),
-            right_name=side.get("right"),
+            name=name,
+            left_name=left_name,
+            right_name=right_name,
             heat_range=HeatRange(minimum=minimum, maximum=maximum, step=step),
             connected=bool(raw.get("connected", 0)),
         )
@@ -307,4 +320,18 @@ def _to_bool(value: Any) -> bool | None:
         return value
     if isinstance(value, int):
         return bool(value)
+    return None
+
+
+def _to_optional_str(value: Any) -> str | None:
+    if value is None:
+        return None
+
+    if isinstance(value, str):
+        cleaned = value.strip()
+        return cleaned or None
+
+    if isinstance(value, (int, float, bool)):
+        return str(value)
+
     return None

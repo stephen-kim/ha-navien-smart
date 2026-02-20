@@ -1,11 +1,10 @@
 [![version](https://img.shields.io/github/manifest-json/v/stephen-kim/ha-navien-smart?filename=custom_components%2Fnavien_smart%2Fmanifest.json)](https://github.com/stephen-kim/ha-navien-smart/releases/latest)
-[![releases](https://img.shields.io/github/downloads/stephen-kim/ha-navien-smart/total)](https://github.com/stephen-kim/ha-navien-smart/releases)
 [![issues](https://img.shields.io/github/issues/stephen-kim/ha-navien-smart)](https://github.com/stephen-kim/ha-navien-smart/issues)
 [![HACS](https://img.shields.io/badge/HACS-Custom-orange.svg)](https://hacs.xyz)
 
 # Navien Smart for Home Assistant
 
-Home Assistant custom integration for controlling Navien Smart heating mats.
+A Home Assistant custom integration for controlling Navien Smart heating mats.
 
 English | [한국어](https://github.com/stephen-kim/ha-navien-smart/blob/latest/README-ko.md)
 
@@ -13,93 +12,58 @@ English | [한국어](https://github.com/stephen-kim/ha-navien-smart/blob/latest
 
 ## Features
 
-- Config flow support (`Settings` -> `Devices & Services` -> `Add Integration`)
-- Auth modes
-  - `account`: username + password
-  - `token`: username + refresh token + account sequence
-- Climate entities for heating mats
-- Dual-zone split mode (`separate_control`) for supported devices
-- Real-time status updates through AWS IoT MQTT
-
-## Installation
-
-### Method 1: HACS
-
-1. Open HACS.
-2. Go to `Integrations` -> menu -> `Custom repositories`.
-3. Add this repository URL with category `Integration`.
-4. Search for `Navien Smart` and install.
-5. Restart Home Assistant.
-6. Add integration: `Settings` -> `Devices & Services` -> `Add Integration` -> `Navien Smart`.
-
-Or use this shortcut:
-
-[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=stephen-kim&repository=ha-navien-smart)
-
-### Method 2: Manual install (Samba / SFTP)
-
-Copy `custom_components/navien_smart` into your Home Assistant `custom_components` directory.
-
-### Method 3: Shell install (SSH / Terminal)
-
-```shell
-wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/latest/install.sh | bash -
-```
-
-Specific version:
-
-```shell
-wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/latest/install.sh | ARCHIVE_TAG=v0.1.3 bash -
-```
-
-After installation, restart Home Assistant.
-
-## Integration Options
-
-- `separate_control`: split left/right entities for dual-zone devices
-- `sound_enabled`: enable operation beep on supported devices
+- Provides `climate` entities for heating mats
+- Supports dual-zone left/right split mode for supported devices (`separate_control`)
+- Real-time status updates via AWS IoT MQTT
+- `sound_enabled`: use operation beep on supported devices
 - `scan_interval`: coordinator polling interval (seconds)
 - MQTT state synchronization
-  - By default, applies AWS IoT MQTT (WebSocket) real-time updates
+  - Uses AWS IoT MQTT (WebSocket) real-time updates by default
   - Automatically falls back to REST polling if MQTT connection fails
   - In fallback mode, `scan_interval` directly affects status update latency
   - Even when MQTT is healthy, `scan_interval` is used as a watchdog for session refresh/recovery
 
+## Installation
+
+1. Install the Navien app on your smartphone, sign up, and complete device pairing at least once.
+2. Install [HACS](https://www.hacs.xyz) in Home Assistant.
+3. Open HACS in Home Assistant.
+4. Go to `Integrations` -> top-right menu -> `Custom repositories`.
+5. Add this repository URL and select `Integration` as the category.
+6. Search for `Navien Smart` and install it.
+7. Restart Home Assistant.
+8. Go to `Settings` -> `Devices & Services` -> `Add Integration` -> select `Navien Smart`.
+
+Shortcut:
+
+[![Open your Home Assistant instance and open a repository inside the Home Assistant Community Store.](https://my.home-assistant.io/badges/hacs_repository.svg)](https://my.home-assistant.io/redirect/hacs_repository/?owner=stephen-kim&repository=ha-navien-smart)
+
 ## Notes
 
-- This integration uses an unofficial API based on reverse engineering.
-- This plugin is only tested with `EME520` and `EMW720` models.
-- Supported models are still limited. Behavior may vary by device/firmware.
-- The original Homebridge implementation in this repository has been removed. This repository is now Python/HA focused.
+- This integration uses an unofficial API (based on reverse engineering).
+- This plugin has only been tested with `EME520` and `EMW720` models.
+- Supported models are limited, and behavior may vary by device/firmware.
+- The previous Homebridge implementation was removed from this repository; it is now Python/HA-only.
 
-## Configure
+## Post-install Setup
 
-`Settings` -> `Devices & Services` -> `Integrations` -> `Add Integration` -> Search `Navien Smart`
+`Settings` -> `Devices & Services` -> `Integrations` -> `Add Integration` -> search for `Navien Smart`
 
-Or use:
+Or:
 
 [![Add Integration](https://my.home-assistant.io/badges/config_flow_start.svg)](https://my.home-assistant.io/redirect/config_flow_start?domain=navien_smart)
 
-### Auth modes
+### Auth modes (choose one)
 
 - `account` (recommended for first setup)
-  - Input: `username`, `password`
+  - Inputs: `username`, `password`
 - `token`
-  - Input: `username`, `refresh_token`, `account_seq`
-  - Use this when you do not want to keep a password in Home Assistant
-
-### Recommended options
-
-- `separate_control`
-  - Enable for dual-zone models to create left/right climate entities separately
-- `sound_enabled`
-  - Enable operation beep on supported devices
-- `scan_interval`
-  - Coordinator refresh interval in seconds (default: `120`)
+  - Inputs: `username`, `refresh_token`, `account_seq`
+  - Use this if you do not want to store your password in Home Assistant
 
 ## Development
 
-Main integration path:
+Integration source path:
 
 - `custom_components/navien_smart`
 

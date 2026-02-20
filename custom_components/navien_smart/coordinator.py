@@ -41,6 +41,7 @@ class NavienDataCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
         self.client = client
         self._devices: dict[str, NavienDevice] = {}
         self._statuses: dict[str, NavienDeviceStatus] = {}
+        self._status_stream_failed = False
 
     @property
     def devices(self) -> dict[str, NavienDevice]:
@@ -53,7 +54,20 @@ class NavienDataCoordinator(DataUpdateCoordinator[dict[str, dict[str, Any]]]):
     async def _async_update_data(self) -> dict[str, dict[str, Any]]:
         try:
             await self.client.async_prepare()
-            await self.client.async_start_status_stream(self.hass.loop, self.async_process_status_event)
+            try:
+                await self.client.async_start_status_stream(self.hass.loop, self.async_process_status_event)
+                if self._status_stream_failed:
+                    _LOGGER.info("Navien status stream recovered.")
+                self._status_stream_failed = False
+            except Exception as err:  # noqa: BLE001
+                if not self._status_stream_failed:
+                    _LOGGER.warning(
+                        "Failed to start Navien status stream; falling back to REST-only mode: %s",
+                        err,
+                    )
+                else:
+                    _LOGGER.debug("Navien status stream retry failed: %s", err)
+                self._status_stream_failed = True
 
             devices = await self.client.async_get_devices()
             self._devices = {device.device_id: device for device in devices}

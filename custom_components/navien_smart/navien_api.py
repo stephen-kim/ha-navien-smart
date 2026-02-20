@@ -84,7 +84,9 @@ class NavienMqttClient:
         )
         client.enable_logger(_LOGGER)
         client.reconnect_delay_set(min_delay=1, max_delay=120)
-        client.ws_set_options(path=path)
+        # Keep Host header aligned with signed URL host to avoid SigV4 mismatch.
+        ws_headers = {"Host": split.netloc or (split.hostname or AWS_IOT_ENDPOINT)}
+        client.ws_set_options(path=path, headers=ws_headers)
         client.tls_set_context(ssl.create_default_context())
 
         client.on_connect = self._on_connect
@@ -220,6 +222,19 @@ class NavienApiClient:
         if self._mqtt is None:
             self._mqtt = NavienMqttClient(hass_loop, callback)
 
+        try:
+            await self._mqtt.async_ensure_started(self._home_seq, self._user_seq, self._aws_credentials)
+            return
+        except Exception as first_err:  # noqa: BLE001
+            _LOGGER.debug(
+                "Navien MQTT initial start failed; refreshing AWS session and retrying once: %s",
+                first_err,
+            )
+
+        # Retry once with a fresh AWS session since temporary credentials can become invalid.
+        await self._async_token_login()
+        if self._home_seq is None or self._user_seq is None or self._aws_credentials is None:
+            raise NavienApiError("Client not prepared after AWS session refresh")
         await self._mqtt.async_ensure_started(self._home_seq, self._user_seq, self._aws_credentials)
 
     async def async_shutdown(self) -> None:

@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.9
+
+- Improved MQTT-over-WebSocket startup for real-time mode
+- Aligned WebSocket `Host` header with SigV4 signed host
+- Added one-time AWS session refresh + retry when status stream start fails
+
 ## 0.1.8
 
 - Fixed setup crash (`KeyError: 'navien_smart'`) during config entry setup/reload

@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.8
+
+- Fixed setup crash (`KeyError: 'navien_smart'`) during config entry setup/reload
+- Added defensive domain-data guards in setup/unload lifecycle
+
 ## 0.1.7
 
 - Fixed potential setup failure when enabling separate left/right control on some models

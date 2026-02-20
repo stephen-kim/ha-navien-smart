@@ -43,6 +43,7 @@ async def async_setup(hass: HomeAssistant, config: ConfigType) -> bool:
 async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     """Set up Navien Smart from a config entry."""
 
+    domain_data = hass.data.setdefault(DOMAIN, {})
     session = async_get_clientsession(hass)
 
     sound_enabled = entry.options.get(
@@ -84,7 +85,7 @@ async def async_setup_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
         ),
     }
 
-    hass.data[DOMAIN][entry.entry_id] = entry_data
+    domain_data[entry.entry_id] = entry_data
     await hass.config_entries.async_forward_entry_setups(entry, PLATFORMS)
     entry.async_on_unload(entry.add_update_listener(_async_update_listener))
 
@@ -98,12 +99,17 @@ async def async_unload_entry(hass: HomeAssistant, entry: ConfigEntry) -> bool:
     if not unload_ok:
         return False
 
-    data = hass.data[DOMAIN].pop(entry.entry_id)
-    client: NavienApiClient = data["client"]
-    await client.async_shutdown()
+    domain_data = hass.data.get(DOMAIN)
+    if domain_data is None:
+        return True
 
-    if not hass.data[DOMAIN]:
-        hass.data.pop(DOMAIN)
+    data = domain_data.pop(entry.entry_id, None)
+    if data is not None:
+        client: NavienApiClient = data["client"]
+        await client.async_shutdown()
+
+    if not domain_data:
+        hass.data.pop(DOMAIN, None)
 
     return True
 

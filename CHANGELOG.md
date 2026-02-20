@@ -1,5 +1,10 @@
 # Changelog
 
+## 0.1.4
+
+- Fixed setup failure when AWS IoT websocket handshake fails
+- Added graceful fallback to REST-only polling mode
+
 ## 0.1.3
 
 - Added `install.sh` for shell-based manual installation

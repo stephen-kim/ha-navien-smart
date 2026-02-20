@@ -56,18 +56,14 @@ After installation, restart Home Assistant.
 
 ## Integration Options
 
-- `auth_mode`: `account` or `token`
 - `separate_control`: split left/right entities for dual-zone devices
-- `sound_enabled`: enable operation beep for supported models
-- `scan_interval`: coordinator polling interval in seconds
-
-### MQTT behavior
-
-- Real-time state sync uses AWS IoT MQTT over WebSocket by default.
-- If MQTT startup fails, the integration automatically falls back to REST polling mode.
-- In fallback mode, `scan_interval` directly affects status update latency.
-- Even when MQTT is healthy, `scan_interval` is still used as a watchdog for session refresh/recovery.  
-  If real-time is stable in your environment, consider a higher value (for example `180`-`300`) to reduce API calls.
+- `sound_enabled`: enable operation beep on supported devices
+- `scan_interval`: coordinator polling interval (seconds)
+- MQTT state synchronization
+  - By default, applies AWS IoT MQTT (WebSocket) real-time updates
+  - Automatically falls back to REST polling if MQTT connection fails
+  - In fallback mode, `scan_interval` directly affects status update latency
+  - Even when MQTT is healthy, `scan_interval` is used as a watchdog for session refresh/recovery
 
 ## Notes
 

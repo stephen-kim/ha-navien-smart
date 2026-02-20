@@ -61,6 +61,14 @@ wget -q -O - https://raw.githubusercontent.com/stephen-kim/ha-navien-smart/lates
 - `sound_enabled`: 지원 기기에서 조작 알림음 사용
 - `scan_interval`: 코디네이터 폴링 주기(초)
 
+### MQTT 동작
+
+- 기본 상태 동기화는 AWS IoT MQTT(WebSocket) 실시간 업데이트를 사용합니다.
+- MQTT 연결이 실패하면 통합은 자동으로 REST 폴링 모드로 전환됩니다.
+- 이때 `scan_interval` 값이 상태 반영 지연 시간에 직접 영향을 줍니다.
+- MQTT가 정상이어도 `scan_interval`은 세션 갱신/복구를 위한 watchdog 용도로 계속 사용됩니다.  
+  실시간 연결이 안정적인 환경이면 API 호출을 줄이기 위해 `180`-`300` 정도로 높이는 것을 권장합니다.
+
 ## 참고
 
 - 이 통합은 비공식 API(리버스 엔지니어링 기반)를 사용합니다.

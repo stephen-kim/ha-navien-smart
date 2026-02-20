@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Add Navien Smart",
-        "description": "Connect your Navien Smart account and discover heating mats.",
+        "description": "Connect your Navien Smart account and discover heating mats.\n\nSome models support dual-zone (left/right) control and some only support single-zone control.\nSome models/devices support operation beep and some may ignore it.",
         "data": {
           "auth_mode": "Authentication mode",
           "username": "Username (Navien ID)",
@@ -13,6 +13,16 @@
           "separate_control": "Separate control for dual-zone devices",
           "sound_enabled": "Enable operation beep",
           "scan_interval": "Update interval (seconds)"
+        },
+        "data_description": {
+          "auth_mode": "Choose account login or token login.",
+          "username": "Navien Smart login ID. Used in both account mode and token mode.",
+          "password": "Required only in account mode.",
+          "refresh_token": "Required only in token mode. Account mode can auto-fill this after login.",
+          "account_seq": "Required only in token mode. Numeric value from your Navien account data.",
+          "separate_control": "When enabled, dual-zone models are exposed as separate left/right climate entities.",
+          "sound_enabled": "Send beep flag when changing settings. Devices without beep support may ignore this.",
+          "scan_interval": "Periodic refresh interval. Lower values update faster but increase API traffic."
         }
       }
     },
@@ -33,10 +43,16 @@
     "step": {
       "init": {
         "title": "Navien Smart options",
+        "description": "Adjust optional behavior. Dual-zone and beep behavior may vary by model.",
         "data": {
           "separate_control": "Separate control for dual-zone devices",
           "sound_enabled": "Enable operation beep",
           "scan_interval": "Update interval (seconds)"
+        },
+        "data_description": {
+          "separate_control": "Enable if your device supports left/right zone control.",
+          "sound_enabled": "Enable only if your model supports operation beep.",
+          "scan_interval": "How often Home Assistant refreshes device data."
         }
       }
     }

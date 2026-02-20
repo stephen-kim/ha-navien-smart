@@ -1,5 +1,11 @@
 # Changelog
 
+## 0.1.6
+
+- Added detailed setup descriptions for account/token fields in config flow
+- Added guidance about model-dependent dual-zone control and operation beep support
+- Added option-screen descriptions for separate control, beep, and scan interval
+
 ## 0.1.5
 
 - Fixed device setup failure when heat-control values include unit suffixes like `0.5C`

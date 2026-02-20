@@ -3,7 +3,7 @@
     "step": {
       "user": {
         "title": "Navien Smart 추가",
-        "description": "Navien Smart 계정을 연결하고 매트를 가져옵니다.",
+        "description": "Navien Smart 계정을 연결하고 매트를 가져옵니다.\n\n모델에 따라 좌/우 2구 독립 제어를 지원하거나 단일 제어만 지원할 수 있습니다.\n또한 동작 알림음(beep)은 모델별로 지원 여부가 다를 수 있습니다.",
         "data": {
           "auth_mode": "인증 방식",
           "username": "아이디 (Navien ID)",
@@ -13,6 +13,16 @@
           "separate_control": "2구 기기 좌우 독립 제어",
           "sound_enabled": "동작 알림음 사용",
           "scan_interval": "업데이트 주기 (초)"
+        },
+        "data_description": {
+          "auth_mode": "계정 로그인 또는 토큰 로그인 방식을 선택합니다.",
+          "username": "Navien Smart 로그인 ID입니다. 계정 모드/토큰 모드 모두 사용됩니다.",
+          "password": "계정 모드에서만 필요합니다.",
+          "refresh_token": "토큰 모드에서만 필요합니다. 계정 모드 로그인 시 자동으로 채워질 수 있습니다.",
+          "account_seq": "토큰 모드에서만 필요합니다. Navien 계정의 숫자 시퀀스 값입니다.",
+          "separate_control": "활성화하면 2구 모델을 좌/우 개별 climate 엔티티로 노출합니다.",
+          "sound_enabled": "제어 시 beep 플래그를 보냅니다. 미지원 모델은 무시할 수 있습니다.",
+          "scan_interval": "주기적 상태 갱신 간격입니다. 짧을수록 빠르지만 API 호출이 늘어납니다."
         }
       }
     },
@@ -33,10 +43,16 @@
     "step": {
       "init": {
         "title": "Navien Smart 옵션",
+        "description": "동작 옵션을 조정합니다. 좌/우 분리 제어와 알림음은 모델에 따라 다를 수 있습니다.",
         "data": {
           "separate_control": "2구 기기 좌우 독립 제어",
           "sound_enabled": "동작 알림음 사용",
           "scan_interval": "업데이트 주기 (초)"
+        },
+        "data_description": {
+          "separate_control": "기기가 좌/우 2구 제어를 지원할 때 활성화하세요.",
+          "sound_enabled": "모델이 동작 알림음을 지원할 때만 활성화하세요.",
+          "scan_interval": "Home Assistant가 기기 상태를 새로고침하는 주기입니다."
         }
       }
     }
